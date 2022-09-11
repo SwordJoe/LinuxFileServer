@@ -16,7 +16,7 @@ using namespace std;
 class Client
 {
 public:
-    Client(const string &downloadPath):_downloadPath(downloadPath){}
+    Client(const string &downloadPath):_downloadPath(downloadPath),_cookie("NULL"){}
     void connect();
     void handleCmd();
     void Register_Login();
@@ -40,6 +40,7 @@ private:
     string _userName;
     string _curDirPath;     //该目录是绝对路径
     string _downloadPath;
+    string _cookie;
 };
 
 void Client::connect(){
@@ -52,6 +53,14 @@ void Client::connect(){
         cout<<"建立连接"<<endl;
     }
     _mainTcpConn=make_shared<TcpConnection>(_sock.fd());
+    Cmd cmd;
+    cmd.set_cmdid(10);
+    cmd.set_cookie(_cookie);
+    string msg=cmd.SerializeAsString();
+    Train_t train(msg.size(),msg);
+    _mainTcpConn->sendTrain(train);
+    msg=_mainTcpConn->recvMsg();
+    cout<<msg<<endl;
 }
 
 //登录&注册
@@ -79,9 +88,14 @@ void Client::Register_Login(){
             _mainTcpConn->sendTrain(train);
 
             msg=_mainTcpConn->recvMsg();    //从服务端接收反馈消息
-            if(msg=="登录成功"){
+            LoginFeedBack feedBack;
+            feedBack.ParseFromString(msg);
+            bool flag=feedBack.flag();
+            if(flag){
                 system("reset");
-                cout<<msg<<endl;
+                cout<<"登录成功"<<endl;
+                _cookie=feedBack.cookie();
+                cout<<"_cookie="<<_cookie<<endl;
                 //_curDirPath.push_back(userName);
                 _userName=userName;
                 //_curDirPath="/"+userName;   //登录成功就将当前路径设置为用户的"家目录"
@@ -291,6 +305,14 @@ void Client::put(string &arg){
     }
     TcpConnection conn(sock.fd());
 
+    Cmd command;
+    command.set_cmdid(10);
+    command.set_cookie(_cookie);
+    string msg=command.SerializeAsString();
+    Train_t train1(msg.size(),msg);
+    conn.sendTrain(train1);
+    msg=conn.recvMsg();
+    cout<<msg<<endl;
 
     int fileFd=open(arg.c_str(),O_RDWR);     //打开文件
     if(-1==fileFd){
@@ -325,7 +347,7 @@ void Client::put(string &arg){
     pPutInfo->set_filename(arg);            //文件名
     cmd.set_allocated_putinfo(pPutInfo);
 
-    string msg=cmd.SerializeAsString();
+    msg=cmd.SerializeAsString();
     Train_t train(msg.size(),msg);
     conn.sendTrain(train);          //发送put命令的相关信息给服务端
 
@@ -369,8 +391,16 @@ void Client::get(string &arg){
     else{
         cout<<"建立长命令连接"<<endl;
     }
+    
     TcpConnection conn(sock.fd());
-
+    Cmd command;
+    command.set_cmdid(10);
+    command.set_cookie(_cookie);
+    string msg=command.SerializeAsString();
+    Train_t train1(msg.size(),msg);
+    conn.sendTrain(train1);
+    msg=conn.recvMsg();
+    cout<<msg<<endl;
     //得到当前绝对路径
     string curDirPath=_curDirPath.empty()?("/"+_userName+"/"):("/"+_userName+"/"+_curDirPath+"/");
     
@@ -397,7 +427,7 @@ void Client::get(string &arg){
     pGetInfo->set_curdirpath(curDirPath);   //当前目录
     pGetInfo->set_filename(arg);            //文件名
     cmd.set_allocated_getinfo(pGetInfo);
-    string msg=cmd.SerializeAsString();
+    msg=cmd.SerializeAsString();
     Train_t train(msg.size(),msg);
     conn.sendTrain(train);  //将下载命令的相关信息发送给客户端
 

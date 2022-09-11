@@ -46,7 +46,7 @@ struct TableStruct_Message_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -65,6 +65,9 @@ extern GetDefaultTypeInternal _Get_default_instance_;
 class LS;
 struct LSDefaultTypeInternal;
 extern LSDefaultTypeInternal _LS_default_instance_;
+class LoginFeedBack;
+struct LoginFeedBackDefaultTypeInternal;
+extern LoginFeedBackDefaultTypeInternal _LoginFeedBack_default_instance_;
 class Mkdir;
 struct MkdirDefaultTypeInternal;
 extern MkdirDefaultTypeInternal _Mkdir_default_instance_;
@@ -82,6 +85,7 @@ template<> ::Cd* Arena::CreateMaybeMessage<::Cd>(Arena*);
 template<> ::Cmd* Arena::CreateMaybeMessage<::Cmd>(Arena*);
 template<> ::Get* Arena::CreateMaybeMessage<::Get>(Arena*);
 template<> ::LS* Arena::CreateMaybeMessage<::LS>(Arena*);
+template<> ::LoginFeedBack* Arena::CreateMaybeMessage<::LoginFeedBack>(Arena*);
 template<> ::Mkdir* Arena::CreateMaybeMessage<::Mkdir>(Arena*);
 template<> ::Put* Arena::CreateMaybeMessage<::Put>(Arena*);
 template<> ::TrainMessage* Arena::CreateMaybeMessage<::TrainMessage>(Arena*);
@@ -136,6 +140,8 @@ class Cmd final :
     kCdinfo = 5,
     kPutinfo = 6,
     kGetinfo = 7,
+    kFeedBack = 8,
+    kCookie = 9,
     PAYLOAD_NOT_SET = 0,
   };
 
@@ -215,6 +221,8 @@ class Cmd final :
     kCdinfoFieldNumber = 5,
     kPutinfoFieldNumber = 6,
     kGetinfoFieldNumber = 7,
+    kFeedBackFieldNumber = 8,
+    kCookieFieldNumber = 9,
   };
   // int32 cmdid = 1;
   void clear_cmdid();
@@ -333,6 +341,42 @@ class Cmd final :
       ::Get* getinfo);
   ::Get* unsafe_arena_release_getinfo();
 
+  // .LoginFeedBack feedBack = 8;
+  bool has_feedback() const;
+  private:
+  bool _internal_has_feedback() const;
+  public:
+  void clear_feedback();
+  const ::LoginFeedBack& feedback() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::LoginFeedBack* release_feedback();
+  ::LoginFeedBack* mutable_feedback();
+  void set_allocated_feedback(::LoginFeedBack* feedback);
+  private:
+  const ::LoginFeedBack& _internal_feedback() const;
+  ::LoginFeedBack* _internal_mutable_feedback();
+  public:
+  void unsafe_arena_set_allocated_feedback(
+      ::LoginFeedBack* feedback);
+  ::LoginFeedBack* unsafe_arena_release_feedback();
+
+  // string cookie = 9;
+  bool has_cookie() const;
+  private:
+  bool _internal_has_cookie() const;
+  public:
+  void clear_cookie();
+  const std::string& cookie() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_cookie(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_cookie();
+  PROTOBUF_FUTURE_MUST_USE_RESULT std::string* release_cookie();
+  void set_allocated_cookie(std::string* cookie);
+  private:
+  const std::string& _internal_cookie() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_cookie(const std::string& value);
+  std::string* _internal_mutable_cookie();
+  public:
+
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:Cmd)
@@ -344,6 +388,8 @@ class Cmd final :
   void set_has_cdinfo();
   void set_has_putinfo();
   void set_has_getinfo();
+  void set_has_feedback();
+  void set_has_cookie();
 
   inline bool has_payload() const;
   inline void clear_has_payload();
@@ -361,6 +407,8 @@ class Cmd final :
     ::Cd* cdinfo_;
     ::Put* putinfo_;
     ::Get* getinfo_;
+    ::LoginFeedBack* feedback_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cookie_;
   } payload_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint32 _oneof_case_[1];
@@ -1428,6 +1476,154 @@ class TrainMessage final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Message_2eproto;
 };
+// -------------------------------------------------------------------
+
+class LoginFeedBack final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LoginFeedBack) */ {
+ public:
+  inline LoginFeedBack() : LoginFeedBack(nullptr) {}
+  ~LoginFeedBack() override;
+  explicit constexpr LoginFeedBack(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  LoginFeedBack(const LoginFeedBack& from);
+  LoginFeedBack(LoginFeedBack&& from) noexcept
+    : LoginFeedBack() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginFeedBack& operator=(const LoginFeedBack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline LoginFeedBack& operator=(LoginFeedBack&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const LoginFeedBack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const LoginFeedBack* internal_default_instance() {
+    return reinterpret_cast<const LoginFeedBack*>(
+               &_LoginFeedBack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(LoginFeedBack& a, LoginFeedBack& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(LoginFeedBack* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(LoginFeedBack* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginFeedBack* New() const final {
+    return new LoginFeedBack();
+  }
+
+  LoginFeedBack* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<LoginFeedBack>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const LoginFeedBack& from);
+  void MergeFrom(const LoginFeedBack& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoginFeedBack* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "LoginFeedBack";
+  }
+  protected:
+  explicit LoginFeedBack(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCookieFieldNumber = 2,
+    kFlagFieldNumber = 1,
+  };
+  // string cookie = 2;
+  void clear_cookie();
+  const std::string& cookie() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_cookie(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_cookie();
+  PROTOBUF_FUTURE_MUST_USE_RESULT std::string* release_cookie();
+  void set_allocated_cookie(std::string* cookie);
+  private:
+  const std::string& _internal_cookie() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_cookie(const std::string& value);
+  std::string* _internal_mutable_cookie();
+  public:
+
+  // bool flag = 1;
+  void clear_flag();
+  bool flag() const;
+  void set_flag(bool value);
+  private:
+  bool _internal_flag() const;
+  void _internal_set_flag(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:LoginFeedBack)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cookie_;
+  bool flag_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Message_2eproto;
+};
 // ===================================================================
 
 
@@ -1895,6 +2091,160 @@ inline ::Get* Cmd::_internal_mutable_getinfo() {
 inline ::Get* Cmd::mutable_getinfo() {
   // @@protoc_insertion_point(field_mutable:Cmd.getinfo)
   return _internal_mutable_getinfo();
+}
+
+// .LoginFeedBack feedBack = 8;
+inline bool Cmd::_internal_has_feedback() const {
+  return payload_case() == kFeedBack;
+}
+inline bool Cmd::has_feedback() const {
+  return _internal_has_feedback();
+}
+inline void Cmd::set_has_feedback() {
+  _oneof_case_[0] = kFeedBack;
+}
+inline void Cmd::clear_feedback() {
+  if (_internal_has_feedback()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete payload_.feedback_;
+    }
+    clear_has_payload();
+  }
+}
+inline ::LoginFeedBack* Cmd::release_feedback() {
+  // @@protoc_insertion_point(field_release:Cmd.feedBack)
+  if (_internal_has_feedback()) {
+    clear_has_payload();
+      ::LoginFeedBack* temp = payload_.feedback_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    payload_.feedback_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::LoginFeedBack& Cmd::_internal_feedback() const {
+  return _internal_has_feedback()
+      ? *payload_.feedback_
+      : reinterpret_cast< ::LoginFeedBack&>(::_LoginFeedBack_default_instance_);
+}
+inline const ::LoginFeedBack& Cmd::feedback() const {
+  // @@protoc_insertion_point(field_get:Cmd.feedBack)
+  return _internal_feedback();
+}
+inline ::LoginFeedBack* Cmd::unsafe_arena_release_feedback() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:Cmd.feedBack)
+  if (_internal_has_feedback()) {
+    clear_has_payload();
+    ::LoginFeedBack* temp = payload_.feedback_;
+    payload_.feedback_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void Cmd::unsafe_arena_set_allocated_feedback(::LoginFeedBack* feedback) {
+  clear_payload();
+  if (feedback) {
+    set_has_feedback();
+    payload_.feedback_ = feedback;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Cmd.feedBack)
+}
+inline ::LoginFeedBack* Cmd::_internal_mutable_feedback() {
+  if (!_internal_has_feedback()) {
+    clear_payload();
+    set_has_feedback();
+    payload_.feedback_ = CreateMaybeMessage< ::LoginFeedBack >(GetArenaForAllocation());
+  }
+  return payload_.feedback_;
+}
+inline ::LoginFeedBack* Cmd::mutable_feedback() {
+  // @@protoc_insertion_point(field_mutable:Cmd.feedBack)
+  return _internal_mutable_feedback();
+}
+
+// string cookie = 9;
+inline bool Cmd::_internal_has_cookie() const {
+  return payload_case() == kCookie;
+}
+inline bool Cmd::has_cookie() const {
+  return _internal_has_cookie();
+}
+inline void Cmd::set_has_cookie() {
+  _oneof_case_[0] = kCookie;
+}
+inline void Cmd::clear_cookie() {
+  if (_internal_has_cookie()) {
+    payload_.cookie_.Destroy(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+    clear_has_payload();
+  }
+}
+inline const std::string& Cmd::cookie() const {
+  // @@protoc_insertion_point(field_get:Cmd.cookie)
+  return _internal_cookie();
+}
+template <typename ArgT0, typename... ArgT>
+inline void Cmd::set_cookie(ArgT0&& arg0, ArgT... args) {
+  if (!_internal_has_cookie()) {
+    clear_payload();
+    set_has_cookie();
+    payload_.cookie_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  }
+  payload_.cookie_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Cmd.cookie)
+}
+inline std::string* Cmd::mutable_cookie() {
+  // @@protoc_insertion_point(field_mutable:Cmd.cookie)
+  return _internal_mutable_cookie();
+}
+inline const std::string& Cmd::_internal_cookie() const {
+  if (_internal_has_cookie()) {
+    return payload_.cookie_.Get();
+  }
+  return ::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited();
+}
+inline void Cmd::_internal_set_cookie(const std::string& value) {
+  if (!_internal_has_cookie()) {
+    clear_payload();
+    set_has_cookie();
+    payload_.cookie_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  }
+  payload_.cookie_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* Cmd::_internal_mutable_cookie() {
+  if (!_internal_has_cookie()) {
+    clear_payload();
+    set_has_cookie();
+    payload_.cookie_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  }
+  return payload_.cookie_.Mutable(
+      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* Cmd::release_cookie() {
+  // @@protoc_insertion_point(field_release:Cmd.cookie)
+  if (_internal_has_cookie()) {
+    clear_has_payload();
+    return payload_.cookie_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  } else {
+    return nullptr;
+  }
+}
+inline void Cmd::set_allocated_cookie(std::string* cookie) {
+  if (has_payload()) {
+    clear_payload();
+  }
+  if (cookie != nullptr) {
+    set_has_cookie();
+    payload_.cookie_.UnsafeSetDefault(cookie);
+    ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArenaForAllocation();
+    if (arena != nullptr) {
+      arena->Own(cookie);
+    }
+  }
+  // @@protoc_insertion_point(field_set_allocated:Cmd.cookie)
 }
 
 inline bool Cmd::has_payload() const {
@@ -2514,9 +2864,80 @@ inline void TrainMessage::set_allocated_msg(std::string* msg) {
   // @@protoc_insertion_point(field_set_allocated:TrainMessage.msg)
 }
 
+// -------------------------------------------------------------------
+
+// LoginFeedBack
+
+// bool flag = 1;
+inline void LoginFeedBack::clear_flag() {
+  flag_ = false;
+}
+inline bool LoginFeedBack::_internal_flag() const {
+  return flag_;
+}
+inline bool LoginFeedBack::flag() const {
+  // @@protoc_insertion_point(field_get:LoginFeedBack.flag)
+  return _internal_flag();
+}
+inline void LoginFeedBack::_internal_set_flag(bool value) {
+  
+  flag_ = value;
+}
+inline void LoginFeedBack::set_flag(bool value) {
+  _internal_set_flag(value);
+  // @@protoc_insertion_point(field_set:LoginFeedBack.flag)
+}
+
+// string cookie = 2;
+inline void LoginFeedBack::clear_cookie() {
+  cookie_.ClearToEmpty();
+}
+inline const std::string& LoginFeedBack::cookie() const {
+  // @@protoc_insertion_point(field_get:LoginFeedBack.cookie)
+  return _internal_cookie();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void LoginFeedBack::set_cookie(ArgT0&& arg0, ArgT... args) {
+ 
+ cookie_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LoginFeedBack.cookie)
+}
+inline std::string* LoginFeedBack::mutable_cookie() {
+  // @@protoc_insertion_point(field_mutable:LoginFeedBack.cookie)
+  return _internal_mutable_cookie();
+}
+inline const std::string& LoginFeedBack::_internal_cookie() const {
+  return cookie_.Get();
+}
+inline void LoginFeedBack::_internal_set_cookie(const std::string& value) {
+  
+  cookie_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* LoginFeedBack::_internal_mutable_cookie() {
+  
+  return cookie_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* LoginFeedBack::release_cookie() {
+  // @@protoc_insertion_point(field_release:LoginFeedBack.cookie)
+  return cookie_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void LoginFeedBack::set_allocated_cookie(std::string* cookie) {
+  if (cookie != nullptr) {
+    
+  } else {
+    
+  }
+  cookie_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), cookie,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:LoginFeedBack.cookie)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include"TcpConnection.hpp"
 #include"Crud.hpp"
 #include"Train.hpp"
+#include"Redis.hpp"
 #include<iostream>
 #include<string>
 using namespace std;
@@ -21,11 +22,12 @@ class NetDiskTask
 {
     friend class EventLoop;
 public:
-    NetDiskTask(const string &msg,TcpConnectionPtr conn, Crud &crud,const string &path)
+    NetDiskTask(const string &msg,TcpConnectionPtr conn, Crud &crud,const string &path,Redis &redis)
     :_msg(msg)
     ,_conn(conn)
     ,_crud(crud)
     ,_rootDirPath(path)
+    ,_redis(redis)
     //,_loop(loop)
     {}
 
@@ -36,17 +38,21 @@ public:
     void mkdir(const string &curDirPath,const string &dirName);
     void put(Cmd cmd);
     void get(Cmd cmd);
+    bool cookieJudge(string cookie);
     
 private:
     bool searchSameFile(const string &curDirPath,const string &filePathName);
     void recvFile(string &md5,string &fileName,int fileSize,int breakPoint);
     void sendFile(int fileFd,int peerfd,off_t fileSize);
+    string RandomStr(int num);
+    
 
 private:
     Crud &_crud;
     string _msg;
     TcpConnectionPtr _conn;
     string _rootDirPath;
+    Redis &_redis;
     //EventLoop &_loop;
 };
 
@@ -86,7 +92,7 @@ void NetDiskTask::Register(const string &userName, const string &passwd){
             _conn->sendTrain(train);
         }
     }
-    _conn->resetEpoll();        //重置fd的监听模式
+    ////_conn->resetEpoll();        //重置fd的监听模式
 }
 
 void NetDiskTask::login(const string &userName,const string &passwd){
@@ -94,17 +100,31 @@ void NetDiskTask::login(const string &userName,const string &passwd){
     queryWord=string("select * from UserInfo where name =")+string("'")+userName+"'"+" and pwd='"+passwd+"';";
     vector<vector<string>> null;
     int ret=_crud.query(queryWord,null);
+    LoginFeedBack feedBack;
     if(1==ret){
-        string response("登录成功");
+        // string response("登录成功");
+        // Train_t train(response.size(),response);
+        // _conn->sendTrain(train);
+        feedBack.set_flag(true);
+        string cookie=RandomStr(userName[0]);
+        feedBack.set_cookie(cookie);
+        string response=feedBack.SerializeAsString();
         Train_t train(response.size(),response);
         _conn->sendTrain(train);
+        _conn->setCookie(cookie);
+        _redis.set(cookie,to_string(_conn->fd()));    //将该用户的cookie值加入redis
     }
     else{
-        string response("用户名或密码错误");
+        // string response("用户名或密码错误");
+        // Train_t train(response.size(),response);
+        // _conn->sendTrain(train);
+
+        feedBack.set_flag(false);
+        string response=feedBack.SerializeAsString();
         Train_t train(response.size(),response);
         _conn->sendTrain(train);
     }
-    _conn->resetEpoll();
+    ////_conn->resetEpoll();
 }
 
 void NetDiskTask::ls(const string &curDirPath){
@@ -136,7 +156,7 @@ void NetDiskTask::ls(const string &curDirPath){
     cout<<response;
     Train_t train(response.size(),response);
     _conn->sendTrain(train);
-    _conn->resetEpoll();
+    //_conn->resetEpoll();
 }
 
 void NetDiskTask::cd(const string &dirPath){
@@ -157,7 +177,7 @@ void NetDiskTask::cd(const string &dirPath){
         string msg("false");
         Train_t train(msg.size(),msg);
         _conn->sendTrain(train);
-        _conn->resetEpoll();        //重置文件描述符epoll监听模式
+        //_conn->resetEpoll();        //重置文件描述符epoll监听模式
         return;
     }
 
@@ -189,7 +209,7 @@ void NetDiskTask::cd(const string &dirPath){
     
     Train_t train(str.size(),str);
     _conn->sendTrain(train);
-    _conn->resetEpoll();
+    //_conn->resetEpoll();
 }
 
 void NetDiskTask::mkdir(const string &curDirPath,const string &dirName){
@@ -216,7 +236,7 @@ void NetDiskTask::mkdir(const string &curDirPath,const string &dirName){
     string str("success");
     Train_t train(str.size(),str);
     _conn->sendTrain(train);
-     _conn->resetEpoll();
+     //_conn->resetEpoll();
 }
 
 //处理客户端上传文件的命令
@@ -251,7 +271,7 @@ void NetDiskTask::put(Cmd cmd){
             string msg("same");
             Train_t train(msg.size(),msg);
             _conn->sendTrain(train);
-            _conn->resetEpoll();        //记得重置fd的epoll监听模式
+            //_conn->resetEpoll();        //记得重置fd的epoll监听模式
             return;         //直接返回，后面不用处理了
         }
         else{   //数据库中有md5值，且该md5的绝对路径就是当前目录，不是重名，是断点续传
@@ -379,7 +399,7 @@ void NetDiskTask::put(Cmd cmd){
             
         }
     }
-    _conn->resetEpoll();        //重置fd的监听模式
+    //_conn->resetEpoll();        //重置fd的监听模式
 }
 
 //查询当前目录有无同名文件
@@ -503,7 +523,7 @@ void NetDiskTask::get(Cmd cmd){
         string msg("false");
         Train_t train(msg.size(),msg);
         _conn->sendTrain(train);
-        _conn->resetEpoll();        //重置fd的监听模式
+        //_conn->resetEpoll();        //重置fd的监听模式
         return;
     }
     else{
@@ -579,4 +599,43 @@ void NetDiskTask::sendFile(int fileFd,int peerfd,off_t fileSize){
         }
     }
     cout<<"发送完毕"<<endl;
+}
+
+
+string NetDiskTask::RandomStr(int num){
+	string str;
+	str.resize(10);
+	int flag;
+	srand(time(nullptr));
+	for(int i=0;i<10;++i){
+		flag=(num+rand())%3;
+		switch(flag){
+			case 0:str[i]=rand()%26+'a';break;
+			case 1:str[i]=rand()%26+'A';break;
+			case 2:str[i]=rand()%10+'0';break;
+		}
+	}
+	return str;
+}
+
+bool NetDiskTask::cookieJudge(string cookie){
+    //return false;
+    char buff[128]={0};
+    //int ret=recv(_conn->fd(),buff,sizeof(buff),MSG_PEEK);
+    if(cookie=="NULL"){
+        string msg("请进行登录操作");
+        Train_t train(msg.size(),msg);
+        _conn->sendTrain(train);
+    }
+    else{
+        cout<<"cookie="<<cookie<<endl;
+        string ret=_redis.get(cookie);
+        if(ret!="NULL"){
+            string msg("跳过登录");
+            Train_t train(msg.size(),msg);
+            _conn->sendTrain(train);
+            _conn->resetEpoll();
+        }
+    }
+    //_conn->resetEpoll();
 }

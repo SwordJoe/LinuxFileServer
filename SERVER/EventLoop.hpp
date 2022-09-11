@@ -34,7 +34,7 @@ public:
 private:
     int createEpollFd();
     int createEventfd();
-    void addEpollReadFd(int fd,bool flag); //将文件描述符添加到监听队列
+    void addEpollReadFd(int fd); //将文件描述符添加到监听队列
     void delEpollReadFd(int fd);    
     void waitEpollFd();
     void handleNewConnection();

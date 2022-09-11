@@ -51,6 +51,8 @@ public:
     void resetEpoll(){
         _loop->resetEpoll(_sock.fd());
     }
+    void setCookie(string &cookie){_cookie=cookie;}
+    string cookie(){return _cookie;}
 private:    
     InetAddress getLocalAddr();     //根据fd获取本端的网络地址，IP+port
     InetAddress getPeerAddr();      //根据fd获取对端的网络地址，IP+port
@@ -66,4 +68,5 @@ private:
     TcpConnectionCallBack _onConnection;    //新连接建立时，需要处理的事
     TcpConnectionCallBack _onMessage;       //连接上有消息到达时，需要处理的事
     TcpConnectionCallBack _onClose;         //连接关闭时，需要处理的事
+    string _cookie;
 };

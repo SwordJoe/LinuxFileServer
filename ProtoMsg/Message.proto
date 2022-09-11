@@ -10,6 +10,8 @@ message Cmd{
         Cd cdinfo=5;
         Put putinfo=6;
         Get getinfo=7;
+        LoginFeedBack feedBack=8;
+        string cookie=9;
     }
 }
 
@@ -50,3 +52,9 @@ message TrainMessage{
     int32 datalen=1;
     string msg=2;
 }
+
+message LoginFeedBack{
+    bool flag=1;
+    string cookie=2;
+}
+

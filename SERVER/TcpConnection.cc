@@ -14,6 +14,7 @@ TcpConnection::TcpConnection(int fd,EventLoop *loop)
 ,_peerAddr(getPeerAddr())
 ,_shutdownWrite(false)
 ,_loop(loop)
+,_cookie("NULL")
 {}
 
 TcpConnection::~TcpConnection(){

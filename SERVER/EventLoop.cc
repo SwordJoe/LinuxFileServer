@@ -18,8 +18,8 @@ EventLoop::EventLoop(Acceptor &acceptor)
 ,_isLooping(false)
 ,_evtList(1024)
 {
-    addEpollReadFd(_acceptor.lfd(),false);    //将负责监听的文件描述符lfd加入epoll红黑树
-    addEpollReadFd(_eventfd,false);
+    addEpollReadFd(_acceptor.lfd());    //将负责监听的文件描述符lfd加入epoll红黑树
+    addEpollReadFd(_eventfd);
 }
 
 EventLoop::~EventLoop(){
@@ -65,15 +65,16 @@ int EventLoop::createEventfd(){
 }
 
 //将文件描述符添加到epoll监听队列
-void EventLoop::addEpollReadFd(int fd,bool flag){
+void EventLoop::addEpollReadFd(int fd){
     struct epoll_event ev;
     ev.data.fd=fd;
-    if(flag){
-        ev.events=EPOLLIN|EPOLLIN|EPOLLONESHOT;
-    }
-    else{
-        ev.events=EPOLLIN|EPOLLET;
-    }
+    // if(flag){
+    //     ev.events=EPOLLIN|EPOLLIN|EPOLLONESHOT;
+    // }
+    // else{
+    //     ev.events=EPOLLIN|EPOLLET;
+    // }
+    ev.events=EPOLLIN;
 
     int ret=epoll_ctl(_epfd,EPOLL_CTL_ADD,fd,&ev);
     if(ret==-1){
@@ -141,7 +142,7 @@ void EventLoop::handleNewConnection(){
     int peerfd=_acceptor.accept();
     cout<<"新客户端为："<<peerfd<<endl;
     //将新连接fd加入到epoll监听队列
-    addEpollReadFd(peerfd,true);     
+    addEpollReadFd(peerfd);     
     //根据获取到的peerfd创建一个TcpConnectionPtr对象
     TcpConnectionPtr conn(new TcpConnection(peerfd,this));
     //给新连接TcpConnectionPtr设置回调三个事件的回调函数

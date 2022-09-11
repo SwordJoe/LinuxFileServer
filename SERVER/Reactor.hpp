@@ -3,6 +3,7 @@
 #include"ThreadPool.hpp"
 #include"NetDiskTask.hpp"
 #include"../ProtoMsg/Message.pb.h"
+#include"Redis.hpp"
 #include<iostream>
 #include<functional>
 using namespace std;
@@ -26,7 +27,7 @@ public:
     }
 
     void onConnection(const TcpConnectionPtr &conn){
-        cout<<conn->toString()<<" has connected"<<endl; 
+        cout<<conn->toString()<<" has connected"<<endl;
     }
 
     //onMessage运行在IO线程(Reactor所在线程)，即消息的接收和发送由Reactor线程来完成，消息的处理交给线程池中的线程来做
@@ -38,11 +39,8 @@ public:
         cmd.ParseFromString(msg);
         int cmdid=cmd.cmdid();
         cout<<"cmdid="<<cmdid<<endl;
-        if(cmdid==9){
-            //conn->setEpollOneShot();
-        }
         
-        NetDiskTask task(msg,conn,crud,"/home/Joe/UserDIR");
+        NetDiskTask task(msg,conn,crud,"/home/Joe/UserDIR",_redis);
         switch(cmdid){
             case 1: {   //注册
                 string userName=cmd.userinfo().username();
@@ -84,20 +82,29 @@ public:
                 break;
             }
             case 9:{    //put
+                //conn->resetEpoll(); 
                 _threadPool.addTask(bind(&NetDiskTask::put,task,cmd));
+
                 break;
             }
             case 10:{
-                cout<<"跳过"<<endl;
+                string cookie=cmd.cookie();
+                cout<<"cookie="<<cookie<<endl;
+                _threadPool.addTask(bind(&NetDiskTask::cookieJudge,task,cookie));
             }
         }
     }
 
     void onClose(const TcpConnectionPtr &conn){
+        string cookie=conn->cookie();
+        if(cookie!="NULL"){
+            _redis.del(cookie);
+        }
         cout<<conn->toString()<<" has closed!"<<endl;
     }
 
 private:
     ThreadPool _threadPool;
     TcpServer _server;
+    Redis _redis;
 };

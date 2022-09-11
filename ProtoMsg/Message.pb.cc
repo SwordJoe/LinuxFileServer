@@ -120,7 +120,20 @@ struct TrainMessageDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT TrainMessageDefaultTypeInternal _TrainMessage_default_instance_;
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Message_2eproto[8];
+constexpr LoginFeedBack::LoginFeedBack(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : cookie_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , flag_(false){}
+struct LoginFeedBackDefaultTypeInternal {
+  constexpr LoginFeedBackDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~LoginFeedBackDefaultTypeInternal() {}
+  union {
+    LoginFeedBack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT LoginFeedBackDefaultTypeInternal _LoginFeedBack_default_instance_;
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Message_2eproto[9];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Message_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Message_2eproto = nullptr;
 
@@ -131,6 +144,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::Cmd, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Cmd, cmdid_),
+  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
+  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
@@ -187,16 +202,24 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Message_2eproto::offsets[] PRO
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::TrainMessage, datalen_),
   PROTOBUF_FIELD_OFFSET(::TrainMessage, msg_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::LoginFeedBack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::LoginFeedBack, flag_),
+  PROTOBUF_FIELD_OFFSET(::LoginFeedBack, cookie_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Cmd)},
-  { 13, -1, sizeof(::UserInfo)},
-  { 20, -1, sizeof(::LS)},
-  { 26, -1, sizeof(::Mkdir)},
-  { 33, -1, sizeof(::Cd)},
-  { 39, -1, sizeof(::Put)},
-  { 48, -1, sizeof(::Get)},
-  { 55, -1, sizeof(::TrainMessage)},
+  { 15, -1, sizeof(::UserInfo)},
+  { 22, -1, sizeof(::LS)},
+  { 28, -1, sizeof(::Mkdir)},
+  { 35, -1, sizeof(::Cd)},
+  { 41, -1, sizeof(::Put)},
+  { 50, -1, sizeof(::Get)},
+  { 57, -1, sizeof(::TrainMessage)},
+  { 64, -1, sizeof(::LoginFeedBack)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -208,28 +231,31 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Put_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Get_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_TrainMessage_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_LoginFeedBack_default_instance_),
 };
 
 const char descriptor_table_protodef_Message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rMessage.proto\"\273\001\n\003Cmd\022\r\n\005cmdid\030\001 \001(\005\022\035"
+  "\n\rMessage.proto\"\361\001\n\003Cmd\022\r\n\005cmdid\030\001 \001(\005\022\035"
   "\n\010userinfo\030\002 \001(\0132\t.UserInfoH\000\022\025\n\006lsinfo\030"
   "\003 \001(\0132\003.LSH\000\022\033\n\tmkdirinfo\030\004 \001(\0132\006.MkdirH"
   "\000\022\025\n\006cdinfo\030\005 \001(\0132\003.CdH\000\022\027\n\007putinfo\030\006 \001("
-  "\0132\004.PutH\000\022\027\n\007getinfo\030\007 \001(\0132\004.GetH\000B\t\n\007pa"
-  "yload\",\n\010UserInfo\022\020\n\010username\030\001 \001(\t\022\016\n\006p"
-  "asswd\030\002 \001(\t\"\030\n\002LS\022\022\n\ncurdirpath\030\001 \001(\t\",\n"
-  "\005Mkdir\022\022\n\ncurdirpath\030\001 \001(\t\022\017\n\007dirname\030\002 "
-  "\001(\t\"\025\n\002Cd\022\017\n\007dirpath\030\001 \001(\t\"J\n\003Put\022\022\n\ncur"
-  "dirpath\030\001 \001(\t\022\020\n\010filename\030\002 \001(\t\022\013\n\003md5\030\003"
-  " \001(\t\022\020\n\010filesize\030\004 \001(\005\"+\n\003Get\022\022\n\ncurdirp"
-  "ath\030\001 \001(\t\022\020\n\010filename\030\002 \001(\t\",\n\014TrainMess"
-  "age\022\017\n\007datalen\030\001 \001(\005\022\013\n\003msg\030\002 \001(\tb\006proto"
-  "3"
+  "\0132\004.PutH\000\022\027\n\007getinfo\030\007 \001(\0132\004.GetH\000\022\"\n\010fe"
+  "edBack\030\010 \001(\0132\016.LoginFeedBackH\000\022\020\n\006cookie"
+  "\030\t \001(\tH\000B\t\n\007payload\",\n\010UserInfo\022\020\n\010usern"
+  "ame\030\001 \001(\t\022\016\n\006passwd\030\002 \001(\t\"\030\n\002LS\022\022\n\ncurdi"
+  "rpath\030\001 \001(\t\",\n\005Mkdir\022\022\n\ncurdirpath\030\001 \001(\t"
+  "\022\017\n\007dirname\030\002 \001(\t\"\025\n\002Cd\022\017\n\007dirpath\030\001 \001(\t"
+  "\"J\n\003Put\022\022\n\ncurdirpath\030\001 \001(\t\022\020\n\010filename\030"
+  "\002 \001(\t\022\013\n\003md5\030\003 \001(\t\022\020\n\010filesize\030\004 \001(\005\"+\n\003"
+  "Get\022\022\n\ncurdirpath\030\001 \001(\t\022\020\n\010filename\030\002 \001("
+  "\t\",\n\014TrainMessage\022\017\n\007datalen\030\001 \001(\005\022\013\n\003ms"
+  "g\030\002 \001(\t\"-\n\rLoginFeedBack\022\014\n\004flag\030\001 \001(\010\022\016"
+  "\n\006cookie\030\002 \001(\tb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Message_2eproto = {
-  false, false, 521, descriptor_table_protodef_Message_2eproto, "Message.proto", 
-  &descriptor_table_Message_2eproto_once, nullptr, 0, 8,
+  false, false, 622, descriptor_table_protodef_Message_2eproto, "Message.proto", 
+  &descriptor_table_Message_2eproto_once, nullptr, 0, 9,
   schemas, file_default_instances, TableStruct_Message_2eproto::offsets,
   file_level_metadata_Message_2eproto, file_level_enum_descriptors_Message_2eproto, file_level_service_descriptors_Message_2eproto,
 };
@@ -250,6 +276,7 @@ class Cmd::_Internal {
   static const ::Cd& cdinfo(const Cmd* msg);
   static const ::Put& putinfo(const Cmd* msg);
   static const ::Get& getinfo(const Cmd* msg);
+  static const ::LoginFeedBack& feedback(const Cmd* msg);
 };
 
 const ::UserInfo&
@@ -275,6 +302,10 @@ Cmd::_Internal::putinfo(const Cmd* msg) {
 const ::Get&
 Cmd::_Internal::getinfo(const Cmd* msg) {
   return *msg->payload_.getinfo_;
+}
+const ::LoginFeedBack&
+Cmd::_Internal::feedback(const Cmd* msg) {
+  return *msg->payload_.feedback_;
 }
 void Cmd::set_allocated_userinfo(::UserInfo* userinfo) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
@@ -366,6 +397,21 @@ void Cmd::set_allocated_getinfo(::Get* getinfo) {
   }
   // @@protoc_insertion_point(field_set_allocated:Cmd.getinfo)
 }
+void Cmd::set_allocated_feedback(::LoginFeedBack* feedback) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  clear_payload();
+  if (feedback) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::LoginFeedBack>::GetOwningArena(feedback);
+    if (message_arena != submessage_arena) {
+      feedback = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, feedback, submessage_arena);
+    }
+    set_has_feedback();
+    payload_.feedback_ = feedback;
+  }
+  // @@protoc_insertion_point(field_set_allocated:Cmd.feedBack)
+}
 Cmd::Cmd(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
@@ -400,6 +446,14 @@ Cmd::Cmd(const Cmd& from)
     }
     case kGetinfo: {
       _internal_mutable_getinfo()->::Get::MergeFrom(from._internal_getinfo());
+      break;
+    }
+    case kFeedBack: {
+      _internal_mutable_feedback()->::LoginFeedBack::MergeFrom(from._internal_feedback());
+      break;
+    }
+    case kCookie: {
+      _internal_set_cookie(from._internal_cookie());
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -476,6 +530,16 @@ void Cmd::clear_payload() {
       }
       break;
     }
+    case kFeedBack: {
+      if (GetArenaForAllocation() == nullptr) {
+        delete payload_.feedback_;
+      }
+      break;
+    }
+    case kCookie: {
+      payload_.cookie_.Destroy(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -547,6 +611,22 @@ const char* Cmd::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::intern
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
           ptr = ctx->ParseMessage(_internal_mutable_getinfo(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .LoginFeedBack feedBack = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+          ptr = ctx->ParseMessage(_internal_mutable_feedback(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string cookie = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+          auto str = _internal_mutable_cookie();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Cmd.cookie"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -633,6 +713,24 @@ failure:
         7, _Internal::getinfo(this), target, stream);
   }
 
+  // .LoginFeedBack feedBack = 8;
+  if (_internal_has_feedback()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        8, _Internal::feedback(this), target, stream);
+  }
+
+  // string cookie = 9;
+  if (_internal_has_cookie()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_cookie().data(), static_cast<int>(this->_internal_cookie().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Cmd.cookie");
+    target = stream->WriteStringMaybeAliased(
+        9, this->_internal_cookie(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -699,6 +797,20 @@ size_t Cmd::ByteSizeLong() const {
           *payload_.getinfo_);
       break;
     }
+    // .LoginFeedBack feedBack = 8;
+    case kFeedBack: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *payload_.feedback_);
+      break;
+    }
+    // string cookie = 9;
+    case kCookie: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_cookie());
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -760,6 +872,14 @@ void Cmd::MergeFrom(const Cmd& from) {
     }
     case kGetinfo: {
       _internal_mutable_getinfo()->::Get::MergeFrom(from._internal_getinfo());
+      break;
+    }
+    case kFeedBack: {
+      _internal_mutable_feedback()->::LoginFeedBack::MergeFrom(from._internal_feedback());
+      break;
+    }
+    case kCookie: {
+      _internal_set_cookie(from._internal_cookie());
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -2499,6 +2619,236 @@ void TrainMessage::InternalSwap(TrainMessage* other) {
       file_level_metadata_Message_2eproto[7]);
 }
 
+// ===================================================================
+
+class LoginFeedBack::_Internal {
+ public:
+};
+
+LoginFeedBack::LoginFeedBack(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:LoginFeedBack)
+}
+LoginFeedBack::LoginFeedBack(const LoginFeedBack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  cookie_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_cookie().empty()) {
+    cookie_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_cookie(), 
+      GetArenaForAllocation());
+  }
+  flag_ = from.flag_;
+  // @@protoc_insertion_point(copy_constructor:LoginFeedBack)
+}
+
+void LoginFeedBack::SharedCtor() {
+cookie_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+flag_ = false;
+}
+
+LoginFeedBack::~LoginFeedBack() {
+  // @@protoc_insertion_point(destructor:LoginFeedBack)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void LoginFeedBack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  cookie_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void LoginFeedBack::ArenaDtor(void* object) {
+  LoginFeedBack* _this = reinterpret_cast< LoginFeedBack* >(object);
+  (void)_this;
+}
+void LoginFeedBack::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void LoginFeedBack::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void LoginFeedBack::Clear() {
+// @@protoc_insertion_point(message_clear_start:LoginFeedBack)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cookie_.ClearToEmpty();
+  flag_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* LoginFeedBack::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool flag = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          flag_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string cookie = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_cookie();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LoginFeedBack.cookie"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* LoginFeedBack::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:LoginFeedBack)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool flag = 1;
+  if (this->flag() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_flag(), target);
+  }
+
+  // string cookie = 2;
+  if (!this->cookie().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_cookie().data(), static_cast<int>(this->_internal_cookie().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "LoginFeedBack.cookie");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_cookie(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:LoginFeedBack)
+  return target;
+}
+
+size_t LoginFeedBack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:LoginFeedBack)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string cookie = 2;
+  if (!this->cookie().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_cookie());
+  }
+
+  // bool flag = 1;
+  if (this->flag() != 0) {
+    total_size += 1 + 1;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void LoginFeedBack::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:LoginFeedBack)
+  GOOGLE_DCHECK_NE(&from, this);
+  const LoginFeedBack* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<LoginFeedBack>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:LoginFeedBack)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:LoginFeedBack)
+    MergeFrom(*source);
+  }
+}
+
+void LoginFeedBack::MergeFrom(const LoginFeedBack& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:LoginFeedBack)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from.cookie().empty()) {
+    _internal_set_cookie(from._internal_cookie());
+  }
+  if (from.flag() != 0) {
+    _internal_set_flag(from._internal_flag());
+  }
+}
+
+void LoginFeedBack::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:LoginFeedBack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void LoginFeedBack::CopyFrom(const LoginFeedBack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:LoginFeedBack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool LoginFeedBack::IsInitialized() const {
+  return true;
+}
+
+void LoginFeedBack::InternalSwap(LoginFeedBack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &cookie_, GetArenaForAllocation(),
+      &other->cookie_, other->GetArenaForAllocation()
+  );
+  swap(flag_, other->flag_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata LoginFeedBack::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_Message_2eproto_getter, &descriptor_table_Message_2eproto_once,
+      file_level_metadata_Message_2eproto[8]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::Cmd* Arena::CreateMaybeMessage< ::Cmd >(Arena* arena) {
@@ -2524,6 +2874,9 @@ template<> PROTOBUF_NOINLINE ::Get* Arena::CreateMaybeMessage< ::Get >(Arena* ar
 }
 template<> PROTOBUF_NOINLINE ::TrainMessage* Arena::CreateMaybeMessage< ::TrainMessage >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TrainMessage >(arena);
+}
+template<> PROTOBUF_NOINLINE ::LoginFeedBack* Arena::CreateMaybeMessage< ::LoginFeedBack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::LoginFeedBack >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

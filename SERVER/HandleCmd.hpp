@@ -1,4 +1,4 @@
-#include"../ProtobufMsg/Message.pb.h"
+#include"../ProtoMsg/Message.pb.h"
 #include<string>
 #include<iostream>
 using namespace std;
