@@ -1,0 +1,52 @@
+syntax="proto3";
+
+//命令类型
+message Cmd{
+    int32 cmdid=1;
+    oneof payload{
+        UserInfo userinfo=2;
+        LS lsinfo=3;
+        Mkdir mkdirinfo=4;
+        Cd cdinfo=5;
+        Put putinfo=6;
+        Get getinfo=7;
+    }
+}
+
+//注册消息
+message UserInfo{
+    string username=1;
+    string passwd=2;
+}
+
+//ls消息
+message LS{
+    string curdirpath=1;
+}
+
+message Mkdir{
+    string curdirpath=1;
+    string dirname=2;
+}
+
+message Cd{
+    string dirpath=1;
+}
+
+message Put{
+    string curdirpath=1;
+    string filename=2;
+    string md5=3;
+    int32 filesize=4;
+}
+
+//下载消息
+message Get{
+    string curdirpath=1;
+    string filename=2;
+}
+
+message TrainMessage{
+    int32 datalen=1;
+    string msg=2;
+}
